@@ -10,7 +10,6 @@ const UserItem = ({user}) => {
             .then((res) => res.json())
             .then((data) => setPosts([...data]))
     }
-    console.log(posts)
     return (
         <div>
             <div className={style.item}>
