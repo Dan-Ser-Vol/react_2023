@@ -1,0 +1,22 @@
+.root {
+    height: 60px;
+    border: 2px solid black;
+    margin-bottom: 50px;
+    border-radius: 3px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    font-size: 22px;
+    color: black;
+}
+
+a {
+    text-decoration: none;
+    color: black;
+    font-weight: bold;
+
+}
+
+a:hover {
+    color: #66c448;
+}
