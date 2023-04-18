@@ -1,0 +1,22 @@
+.container {
+ width: 100%;
+ margin: 0 auto;
+ padding: 20px;
+ background-color: #f3eadc;
+ background-repeat: no-repeat;
+ background-size: cover;
+}
+
+textarea {
+ width: 250px;
+ height: 100px;
+}
+
+.formBlock {
+ margin-bottom: 10px;
+}
+
+
+.error_block {
+ color: red;
+}

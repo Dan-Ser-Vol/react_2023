@@ -1,8 +1,8 @@
-import {instanceComments, instanceUsers} from './axios.services';
+import {instanceComments} from './axios.services';
 import {urls} from '../configs/urls';
 
 
-const userService = {
+const commentsService = {
     getAll: () => instanceComments.get(urls.comments),
     getById: (id) => instanceComments.get(`${urls.comments}/${id}`),
     updateById: (id, comment) => instanceComments.put(`${urls.comments}/${id}`, comment),
@@ -12,5 +12,5 @@ const userService = {
 
 
 export {
-    userService
+    commentsService
 }
