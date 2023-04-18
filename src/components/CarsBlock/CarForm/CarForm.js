@@ -7,7 +7,7 @@ import style from './CarForm.module.css'
 import {toast} from 'react-toastify';
 
 
-const CarForm = ({setAllCars, selectedCar}) => {
+const CarForm = ({setAllCars, selectedCar, setSelectedCar}) => {
     const {
         register,
         handleSubmit,
@@ -21,7 +21,7 @@ const CarForm = ({setAllCars, selectedCar}) => {
             setValue('price', selectedCar.price, {shouldValidate: true})
             setValue('year', selectedCar.year, {shouldValidate: true})
         }
-    }, [selectedCar])
+    }, [selectedCar, isValid, setSelectedCar])
 
     const notifySuccess = (message) => toast.success(message,
         {
@@ -45,8 +45,9 @@ const CarForm = ({setAllCars, selectedCar}) => {
         try {
             await carService.updateById(selectedCar.id, carData);
             setAllCars((prev) => !prev);
-            reset();
             notifySuccess('Авто було оновленно!')
+            setSelectedCar(null)
+            reset()
         } catch (error) {
             console.error(error);
         }

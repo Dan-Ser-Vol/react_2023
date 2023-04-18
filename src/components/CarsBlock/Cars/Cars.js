@@ -38,6 +38,7 @@ const Cars = () => {
             <CarForm
                 setAllCars={setAllCars}
                 selectedCar={selectedCar}
+                setSelectedCar={setSelectedCar}
             />
             {
                 cars.map((car) => <Car
