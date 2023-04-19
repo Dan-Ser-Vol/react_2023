@@ -1,26 +1,22 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, {useState} from 'react';
+
 import './App.css';
+import {PageEnum} from "./constants/page.enum";
+import UserPage from "./pages/UserPage";
+import CommentPage from "./pages/CommentPage";
+import CarPage from "./pages/CarPage";
+import Header from "./components/Header";
 
 function App() {
+  const [choice, setChoice] =  useState<PageEnum>(PageEnum.USERS)
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+        <div >
+            <div><Header setChoice={setChoice}/></div>
+          {choice === PageEnum.USERS && <UserPage/>}
+          {choice === PageEnum.COMMENTS && <CommentPage/>}
+          {choice === PageEnum.CARS && <CarPage/>}
+        </div>
+    )
 }
 
 export default App;
