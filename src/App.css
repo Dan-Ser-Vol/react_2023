@@ -1,3 +1,7 @@
+body {
+  font-size: 18px;
+}
+
 .App {
   text-align: center;
 }
@@ -13,20 +17,63 @@
   }
 }
 
-.App-header {
+.navbar {
   background-color: #282c34;
-  min-height: 100vh;
+  min-height: 80px;
   display: flex;
-  flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: space-evenly;
   font-size: calc(10px + 2vmin);
   color: white;
 }
 
-.App-link {
+.link_navbar, .link, button{
   color: #61dafb;
+  border: none;
 }
+
+.link_navbar:hover {
+  color: #2186a2;
+}
+
+.link:hover {
+  color: #2186a2;
+}
+
+button:hover {
+  color: #2186a2;
+  cursor: pointer;
+}
+
+.green {
+  color: green;
+  margin-left: 5px;
+  font-size: 16px;
+  font-weight: bold;
+}
+span {
+  font-weight: bold;
+  font-size: 18px;
+  margin-right: 5px;
+  color: #282C34;
+}
+
+.red {
+  color: red;
+  margin-left: 5px;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.item {
+  margin-top: 10px;
+  padding: 10px;
+  border: none;
+  border-radius: 3px;
+  background-color: #dff0f5;
+
+}
+
 
 @keyframes App-logo-spin {
   from {
