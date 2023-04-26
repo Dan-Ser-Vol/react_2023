@@ -1,4 +1,4 @@
-import {Component} from "react";
+import {Component, useState} from "react";
 import {IComment} from "../../interfaces/comment.interfaces";
 
 interface IProp {

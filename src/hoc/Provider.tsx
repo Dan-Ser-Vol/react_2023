@@ -1,26 +1,32 @@
-import React, {createContext, FC, ReactNode} from 'react';
-import {IPost} from "../interfaces/post.interfaces";
-import {IComment} from "../interfaces/comment.interfaces";
+import React, { createContext, FunctionComponent, ReactNode, useReducer } from 'react';
+
+import {catReducer, initialStateCats} from '../reducers/Cat.reducer';
+import {dogReducer, initialStateDogs} from "../reducers/Dog.reducer";
+
 
 interface IProps {
- children :ReactNode
+    children: ReactNode;
 }
 
-interface IContext {
-    posts:IPost[]| null
-    comments:IComment[] | null
+interface IReducers {
+    dogs: any
+     cats: any
 }
 
-const StateContext = createContext(null)
+export const StateContext = createContext<IReducers| null>(null);
 
-const reducers = {}
 
-const Provider: FC<IProps> = ({children}) => {
+const Provider: FunctionComponent<IProps> = ({ children }) => {
+    const reducers = {
+        dogs: useReducer(dogReducer, initialStateDogs),
+        cats: useReducer(catReducer, initialStateCats),
+    };
+
     return (
-        <div>
+        <StateContext.Provider value={reducers}>
             {children}
-        </div>
+        </StateContext.Provider>
     );
 };
 
-export default  Provider;
+export default Provider;

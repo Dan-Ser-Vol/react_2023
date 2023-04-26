@@ -5,6 +5,7 @@ import {Route, Routes} from "react-router-dom"
 
 import Layout from "./components/Layout/Layout";
 import Comments from "./components/Comments/Comments";
+import AnimalsForm from "./components/Animals/AnimalsForm";
 
 function App() {
   return (
@@ -12,7 +13,7 @@ function App() {
         <Routes>
           <Route path={'/'} element={<Layout/>}>
             {/*<Route path="/todos" element={<Posts/>}/>*/}
-            {/*<Route path="/albums" element={<Albums/>}/>*/}
+            <Route path="/animals" element={<AnimalsForm/>}/>
             <Route path="/comments" element={<Comments/>}/>
           </Route>
         </Routes>
