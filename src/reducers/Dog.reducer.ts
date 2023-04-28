@@ -1,3 +1,5 @@
+import {IAction} from "../interfaces/animal.interfaces";
+
 const ADD_DOG = 'ADD_DOG';
 const DELETE_DOG = 'DELETE_DOG';
 
@@ -10,17 +12,6 @@ export interface IDog {
     name: string;
 }
 
-interface IAddDogAction {
-    type: typeof ADD_DOG;
-    payload: IDog;
-}
-
-interface IDeleteDogAction {
-    type: typeof DELETE_DOG;
-    payload: number;
-}
-
-type IAction = IAddDogAction | IDeleteDogAction;
 
 const initialStateDogs: IState = {
     dogs: [],
@@ -42,7 +33,7 @@ const dogReducer = (state = initialStateDogs, action: IAction): IState => {
     }
 };
 
-const addDogAction = (dog: IDog): IAddDogAction => ({type: ADD_DOG, payload: dog});
-const deleteDogAction = (id: number): IDeleteDogAction => ({type: DELETE_DOG, payload: id});
+const addDogAction = (dog: IDog) => ({type: ADD_DOG, payload: dog});
+const deleteDogAction = (id: number)  => ({type: DELETE_DOG, payload: id});
 
 export {addDogAction, dogReducer, initialStateDogs, deleteDogAction};

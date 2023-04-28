@@ -1,10 +1,9 @@
-import {Component, useState} from "react";
+import {Component} from "react";
 import {IComment} from "../../interfaces/comment.interfaces";
 
 interface IProp {
     comment: IComment
 }
-
 
 class Comment extends Component<IProp> {
     render() {

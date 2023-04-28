@@ -1,4 +1,5 @@
 import React, {FC} from 'react';
+
 import {deleteCatAction, ICat} from "../../reducers/Cat.reducer";
 import {useAppReducer} from "../../hooks/useAppReducer";
 
@@ -11,9 +12,11 @@ const Cat : FC<IProps> = ({cat}) => {
     const [, dispatch ] = useAppReducer((state: { cats: ICat[]; }) => state.cats)
     return (
         <div>
-            {cat.name}
-            <div>
-                <button onClick={()=>dispatch(deleteCatAction(cat.id))}>Delete</button>
+
+            <div className={'item'}>
+             Cat name: {cat.name}
+                <button style={{color: 'red', marginLeft: '10px'}}
+                        onClick={()=>dispatch(deleteCatAction(cat.id))}>Delete</button>
             </div>
         </div>
     );

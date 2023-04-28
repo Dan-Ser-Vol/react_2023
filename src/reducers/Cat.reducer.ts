@@ -1,3 +1,5 @@
+import {IAction} from "../interfaces/animal.interfaces";
+
 const ADD_CAT = 'ADD_CAT';
 const DELETE_CAT = 'DELETE_CAT';
 
@@ -10,17 +12,6 @@ export interface ICat {
     name: string;
 }
 
-interface IAddCatAction {
-    type: typeof ADD_CAT;
-    payload: ICat;
-}
-
-interface IDeleteCatAction {
-    type: typeof DELETE_CAT;
-    payload: number;
-}
-
-type IAction = IAddCatAction | IDeleteCatAction;
 
 const initialStateCats: IState = {
     cats: [],
@@ -32,17 +23,17 @@ const catReducer = (state = initialStateCats, action: IAction): IState => {
             const cat: ICat = action.payload;
             const catId = state.cats.slice(-1)[0]?.id + 1 || 1;
             cat.id = catId;
-            return { ...state, cats: [...state.cats, cat] };
+            return {...state, cats: [...state.cats, cat]};
         case DELETE_CAT:
             const catIndex = state.cats.findIndex((value) => value.id === action.payload);
             state.cats.splice(catIndex, 1);
-            return { ...state };
+            return {...state};
         default:
             return state;
     }
 };
 
-const addCatAction = (cat: ICat): IAddCatAction => ({ type: ADD_CAT, payload: cat });
-const deleteCatAction = (id: number): IDeleteCatAction => ({ type: DELETE_CAT, payload: id });
+const addCatAction = (cat: ICat) => ({type: ADD_CAT, payload: cat});
+const deleteCatAction = (id: number) => ({type: DELETE_CAT, payload: id});
 
-export { addCatAction, catReducer, initialStateCats, deleteCatAction };
+export {addCatAction, catReducer, initialStateCats, deleteCatAction};
