@@ -1,19 +1,21 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
+import {toast} from 'react-toastify';
+import {useDispatch, useSelector} from 'react-redux';
+
 import {carService} from '../../../services/car.service';
 import Car from '../Car/Car';
 import CarForm from '../CarForm/CarForm';
-import {toast} from 'react-toastify';
+import {carsActions} from '../../../redux';
 
 
 const Cars = () => {
-    const [cars, setCars] = useState([])
-    const [allCars, setAllCars] = useState(null)
-    const [selectedCar, setSelectedCar] = useState(null)
+    const {cars, carForUpdate, trigger} = useSelector(state =>state.cars)
+    const dispatch = useDispatch()
 
     useEffect(() => {
         carService.getAll()
-            .then((value) => setCars(value.data.reverse()))
-    }, [allCars])
+            .then((value) => dispatch(carsActions.setCars(value.data.reverse())))
+    }, [dispatch, carForUpdate, trigger])
 
     const notifyWarn = () => toast.warn('Авто було видалене!',
         {
@@ -25,7 +27,7 @@ const Cars = () => {
     const deleteCar = async (id) => {
         try {
             await carService.deleteById(id);
-            setAllCars((prev) => !prev);
+            dispatch(carsActions.changeTrigger())
             notifyWarn()
         } catch (error) {
             console.error(error);
@@ -36,15 +38,12 @@ const Cars = () => {
     return (
         <div>
             <CarForm
-                setAllCars={setAllCars}
-                selectedCar={selectedCar}
-                setSelectedCar={setSelectedCar}
+                carForUpdate={carForUpdate}
             />
             {
                 cars.map((car) => <Car
                     key={car.id}
                     car={car}
-                    setSelectedCar={setSelectedCar}
                     deleteCar={deleteCar}
 
                 />)

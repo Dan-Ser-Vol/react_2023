@@ -1,13 +1,18 @@
 import React, {useEffect} from 'react';
 import {useForm} from 'react-hook-form';
-import {carService} from '../../../services/car.service';
 import {joiResolver} from '@hookform/resolvers/joi';
+import {toast} from 'react-toastify';
+import {useDispatch, useSelector} from 'react-redux';
+
+import {carService} from '../../../services/car.service';
 import {carValidator} from '../../../validators/car.validator';
 import style from './CarForm.module.css'
-import {toast} from 'react-toastify';
+import {carsActions} from '../../../redux';
 
 
-const CarForm = ({setAllCars, selectedCar, setSelectedCar}) => {
+const CarForm = () => {
+    const {carForUpdate} = useSelector(state => state.cars)
+
     const {
         register,
         handleSubmit,
@@ -15,13 +20,15 @@ const CarForm = ({setAllCars, selectedCar, setSelectedCar}) => {
         formState: {errors, isValid}
     } = useForm({mode: 'all', resolver: joiResolver(carValidator)})
 
+   const dispatch  = useDispatch()
+
     useEffect(() => {
-        if (selectedCar) {
-            setValue('brand', selectedCar.brand, {shouldValidate: true})
-            setValue('price', selectedCar.price, {shouldValidate: true})
-            setValue('year', selectedCar.year, {shouldValidate: true})
+        if (carForUpdate) {
+            setValue('brand', carForUpdate.brand, {shouldValidate: true})
+            setValue('price', carForUpdate.price, {shouldValidate: true})
+            setValue('year', carForUpdate.year, {shouldValidate: true})
         }
-    }, [selectedCar, isValid, setSelectedCar])
+    }, [carForUpdate, isValid, setValue])
 
     const notifySuccess = (message) => toast.success(message,
         {
@@ -33,8 +40,8 @@ const CarForm = ({setAllCars, selectedCar, setSelectedCar}) => {
     const createNewCar = async (carData) => {
         try {
             await carService.create(carData)
-            setAllCars(prev => !prev)
             reset()
+            dispatch(carsActions.changeTrigger())
             notifySuccess('Авто створено')
         } catch (err) {
             console.log(err);
@@ -43,22 +50,19 @@ const CarForm = ({setAllCars, selectedCar, setSelectedCar}) => {
 
     const updateCar = async (carData) => {
         try {
-            await carService.updateById(selectedCar.id, carData);
-            setAllCars((prev) => !prev);
+            await carService.updateById(carForUpdate.id, carData);
             notifySuccess('Авто було оновленно!')
-            setSelectedCar(null)
+            dispatch(carsActions.changeTrigger())
+            dispatch(carsActions.setCarForUpdate(null))
             reset()
         } catch (error) {
             console.error(error);
         }
     };
 
-
     return (
-
         <>
-            <form onSubmit={handleSubmit(selectedCar ? updateCar : createNewCar)}>
-
+            <form onSubmit={handleSubmit(carForUpdate ? updateCar : createNewCar)}>
                 <label>
                     <div>Brand________________________</div>
                     <input  {...register('brand',)}/>
@@ -77,8 +81,7 @@ const CarForm = ({setAllCars, selectedCar, setSelectedCar}) => {
                 </label>
                 {errors.year && <div className={style.error_block}>{errors.year.message}</div>}
 
-                <button disabled={!isValid}>{selectedCar ? 'UPDATE' : 'CREATE'}</button>
-
+                <button disabled={!isValid}>{carForUpdate ? 'UPDATE' : 'CREATE'}</button>
             </form>
         </>
 

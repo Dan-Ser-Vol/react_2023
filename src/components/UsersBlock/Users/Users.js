@@ -1,28 +1,29 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import UserForm from '../UserForm/UserForm';
+import {useDispatch, useSelector} from 'react-redux';
+
 import style from './Users.module.css'
 import {userService} from '../../../services/users.service';
-import User from '../User/User';
+import {User} from '../User/User';
+import {usersActions} from '../../../redux';
+
 
 const Users = () => {
-    const [users, setUsers]= useState([])
-    console.log(users)
+    const {users} = useSelector(state=>state.users)
+    const dispatch = useDispatch()
+
     useEffect(()=>{
-        userService.getAll().then(value=>setUsers(value.data))
+        userService.getAll().then(value=> dispatch(usersActions.setAll(value.data)))
+    }, [dispatch])
 
-    }, [])
 
-    const addUser = (user) => {
-        setUsers([...users, user])
-    }
     return (
         <div className={style.container}>
-            <UserForm addUser={addUser}/>
+            <UserForm/>
             {
-                users.map((user) => <User key={user.id} user={user}/>)
+                users.map((user) => <User  key={user.id} user={user}/>)
             }
         </div>
     );
 };
-
-export default Users;
+export {Users}

@@ -4,7 +4,7 @@ import {joiResolver} from '@hookform/resolvers/joi';
 import style from './UserForm.module.css'
 import {toast} from 'react-toastify';
 import {userService} from '../../../services/users.service';
-import User from '../User/User';
+import {User} from '../User/User';
 import {userValidator} from '../../../validators/user.validator';
 
 

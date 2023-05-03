@@ -1,9 +1,10 @@
 import React, {useState} from 'react';
-import Comment from './Comment';
 import {joiResolver} from '@hookform/resolvers/joi';
-import {commentsService} from '../../../services/comments.service';
 import {toast} from 'react-toastify';
 import {useForm} from 'react-hook-form';
+
+import Comment from './Comment';
+import {commentsService} from '../../../services/comments.service';
 import style from "./Comment.module.css"
 import {commentsValidator} from '../../../validators/commens.validator';
 
