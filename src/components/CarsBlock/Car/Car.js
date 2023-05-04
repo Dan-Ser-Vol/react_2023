@@ -3,9 +3,28 @@ import {useDispatch} from 'react-redux';
 
 import style from './Car.module.css'
 import {carsActions} from '../../../redux';
+import {carService} from '../../../services/car.service';
+import {toast} from 'react-toastify';
 
-const Car = ({car, deleteCar}) => {
+const Car = ({car}) => {
     const dispatch = useDispatch()
+
+    const notifyWarn = () => toast.warn('Авто було видалене!',
+        {
+            position: 'top-center',
+            autoClose: 2000,
+        }
+    )
+
+    const deleteCar = async (id) => {
+        try {
+            await carService.deleteById(id);
+            dispatch(carsActions.changeTrigger())
+            notifyWarn()
+        } catch (error) {
+            console.error(error);
+        }
+    };
 
     return (
         <div className={style.root}>

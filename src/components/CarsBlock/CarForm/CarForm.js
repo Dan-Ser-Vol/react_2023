@@ -18,17 +18,17 @@ const CarForm = () => {
         handleSubmit,
         reset, setValue,
         formState: {errors, isValid}
-    } = useForm({mode: 'all', resolver: joiResolver(carValidator)})
+    } = useForm({ resolver: joiResolver(carValidator)})
 
    const dispatch  = useDispatch()
 
     useEffect(() => {
         if (carForUpdate) {
-            setValue('brand', carForUpdate.brand, {shouldValidate: true})
-            setValue('price', carForUpdate.price, {shouldValidate: true})
-            setValue('year', carForUpdate.year, {shouldValidate: true})
+            setValue('brand', carForUpdate.brand)
+            setValue('price', carForUpdate.price,  )
+            setValue('year', carForUpdate.year)
         }
-    }, [carForUpdate, isValid, setValue])
+    }, [carForUpdate, setValue])
 
     const notifySuccess = (message) => toast.success(message,
         {
@@ -40,9 +40,9 @@ const CarForm = () => {
     const createNewCar = async (carData) => {
         try {
             await carService.create(carData)
-            reset()
             dispatch(carsActions.changeTrigger())
             notifySuccess('Авто створено')
+            reset()
         } catch (err) {
             console.log(err);
         }

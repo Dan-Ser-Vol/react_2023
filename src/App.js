@@ -7,6 +7,7 @@ import './App.css'
 import Navbar from './components/Navbar/Navbar';
 import {Users} from './components';
 import Comments from './components/CommentsBlock/Comments/Comments';
+import Home from './pages/Home/Home';
 
 
 
@@ -16,6 +17,7 @@ function App() {
         <div className={'container'}>
             <Navbar/>
             <Routes>
+                <Route path={'/'} element={<Home/>}/>
                 <Route path={'/users'} element={<Users/>}/>
                 <Route path={'/comments'} element={<Comments/>}/>
                 <Route path={'/cars'} element={<Cars/>}/>
