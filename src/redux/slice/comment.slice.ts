@@ -1,4 +1,4 @@
-import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
+import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {AxiosError} from "axios";
 
 import {IComment} from "../../interfaces";
@@ -48,10 +48,10 @@ const slice = createSlice({
     reducers: {},
     extraReducers: builder =>
         builder
-            .addCase(getAll.fulfilled, (state, action) => {
+            .addCase(getAll.fulfilled, (state, action:PayloadAction<IComment[]>) => {
                 state.comments = action.payload
             })
-            .addCase(create.fulfilled, (state, action) => {
+            .addCase(create.fulfilled, (state, action:PayloadAction<IComment>) => {
                 state.comments.push(action.payload)
                 state.trigger = !state.trigger
             })

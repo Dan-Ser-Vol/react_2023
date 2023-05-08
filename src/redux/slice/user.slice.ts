@@ -1,6 +1,6 @@
-import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
-import {IComment, IUser} from "../../interfaces";
-import {commentService, userService} from "../../services";
+import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
+import {IUser} from "../../interfaces";
+import {userService} from "../../services";
 import {AxiosError} from "axios";
 
 
@@ -41,10 +41,10 @@ const slice = createSlice({
     initialState,
     reducers:{},
     extraReducers: builder => builder
-        .addCase(getAll.fulfilled, (state, action) => {
+        .addCase(getAll.fulfilled, (state, action: PayloadAction<IUser[]>) => {
             state.users = action.payload
         })
-        .addCase(create.fulfilled, (state, action) => {
+        .addCase(create.fulfilled, (state, action:PayloadAction<IUser>) => {
             state.users.push(action.payload)
         })
 

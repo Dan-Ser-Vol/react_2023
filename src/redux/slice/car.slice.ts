@@ -1,5 +1,5 @@
 import {ICar, IError} from "../../interfaces";
-import {createAsyncThunk, createSlice, isFulfilled, isRejectedWithValue} from "@reduxjs/toolkit";
+import {createAsyncThunk, createSlice, isFulfilled, isRejectedWithValue, PayloadAction} from "@reduxjs/toolkit";
 import {carService} from "../../services";
 import {AxiosError} from "axios";
 
@@ -68,13 +68,13 @@ const slice = createSlice({
     name: "carSlice",
     initialState,
     reducers: {
-        setCarForUpdate: (state, action) => {
+        setCarForUpdate: (state, action: PayloadAction<ICar>) => {
             state.carForUpdate = action.payload
         }
     },
     extraReducers: builder =>
         builder
-            .addCase(getAll.fulfilled, (state, action) => {
+            .addCase(getAll.fulfilled, (state, action:PayloadAction<ICar[]>) => {
                 state.cars = action.payload
             })
             .addCase(updateCar.fulfilled, state => {
@@ -86,7 +86,7 @@ const slice = createSlice({
             .addMatcher(isFulfilled(), state => {
                 state.errors = null
             })
-            .addMatcher(isRejectedWithValue(), (state, action) => {
+            .addMatcher(isRejectedWithValue(), (state, action: PayloadAction<IError>) => {
                 state.errors = action.payload
 
             })
