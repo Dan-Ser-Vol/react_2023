@@ -1,21 +1,18 @@
 import React, {FC} from 'react';
 import {SubmitHandler, useForm} from "react-hook-form";
 
-import {IComment} from "../../interfaces/comment.interface";
-import {IUseState} from "../../types/useState.type";
-import {commentService} from "../../services/comment.service";
+import {IComment} from "../../interfaces";
+import {useAppDispatch} from "../../hooks";
+import {commentActions} from "../../redux";
 
 
-interface IProps {
-    setComments: IUseState<IComment[]>
-}
-
-const CommentForm: FC<IProps> = ({setComments}) => {
+const CommentForm: FC = () => {
     const {register, handleSubmit, reset} = useForm<IComment>()
 
+    const dispatch = useAppDispatch()
+
     const save: SubmitHandler<IComment> = async (comment) => {
-        const {data} = await commentService.create(comment)
-        setComments((prev) => [...prev, data])
+         await dispatch(commentActions.create({comment}))
         reset()
     }
 
@@ -29,4 +26,4 @@ const CommentForm: FC<IProps> = ({setComments}) => {
     );
 };
 
-export default CommentForm;
+export  {CommentForm};

@@ -1,7 +1,7 @@
-import {urls} from "../configs/urls";
-import {IRes} from "../types/res.type";
+import {urls} from "../configs";
+import {IRes} from "../types";
 import {placeAxiosService} from "./axios.service";
-import {IComment} from "../interfaces/comment.interface";
+import {IComment} from "../interfaces";
 
 
 const commentService = {

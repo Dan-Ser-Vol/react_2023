@@ -1,21 +1,23 @@
 import React, {FC} from 'react';
 
-import {IComment} from "../../interfaces/comment.interface";
+import {IComment} from "../../interfaces";
 
 
 interface IProps {
     comment: IComment
 }
 
-const Comment:FC<IProps> = ({comment}) => {
+const Comment: FC<IProps> = ({comment}) => {
+    const {id, name, email, body} = comment
+
     return (
         <div className={'item_comment'}>
-            <div><span>ID:</span> {comment.id}</div>
-            <div><span>NAME:</span>{comment.name}</div>
-            <div><span>EMAIL:</span>{comment.email}</div>
-            <div><span>BODY:</span>{comment.body}</div>
+            <div><span>ID:</span> <span className={'span_dark'}> {id}</span></div>
+            <div><span>NAME:</span> <span className={'span_dark'}> {name}</span></div>
+            <div><span>EMAIL:</span> <span className={'span_dark'}> {email}</span></div>
+            <div><span>BODY:</span> <span className={'span_dark'}> {body}</span></div>
         </div>
     );
 };
 
-export default Comment;
+export {Comment};

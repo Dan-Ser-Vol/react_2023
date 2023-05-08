@@ -1,13 +1,17 @@
-import React, {FC} from 'react';
+import React, {FC, useEffect} from 'react';
+import {Comment} from "./Comment";
+import {useAppDispatch, useAppSelector} from "../../hooks";
+import {commentActions} from "../../redux";
 
-import {IComment} from "../../interfaces/comment.interface";
-import Comment from "./Comment";
 
-interface IProps {
-    comments: IComment[]
-}
+const Comments: FC = () => {
 
-const Comments: FC<IProps> = ({comments}) => {
+    const {comments} = useAppSelector(state => state.commentReducer)
+    const dispatch = useAppDispatch()
+
+    useEffect(() => {
+        dispatch(commentActions.getAll())
+    }, [dispatch])
     return (
         <div>
             {
@@ -17,4 +21,4 @@ const Comments: FC<IProps> = ({comments}) => {
     );
 };
 
-export default Comments;
+export  {Comments};

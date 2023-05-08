@@ -1,13 +1,19 @@
-import React, {FC} from 'react';
+import React, {FC, useEffect} from 'react';
 
-import {IUser} from "../../interfaces/user.interface";
-import User from "./User";
+import {User} from "./User";
+import {useAppDispatch, useAppSelector} from "../../hooks";
+import {userActions} from "../../redux";
 
-interface IProps {
-    users: IUser[]
-}
 
-const Users: FC<IProps> = ({users}) => {
+const Users: FC = () => {
+    const { users} = useAppSelector(state => state.userReducer)
+    const dispatch = useAppDispatch()
+
+
+    useEffect(() => {
+    dispatch(userActions.getAll())
+    }, [dispatch]);
+
     return (
         <div>
             {
@@ -17,4 +23,4 @@ const Users: FC<IProps> = ({users}) => {
     );
 };
 
-export default Users;
+export {Users};

@@ -6,6 +6,15 @@
     flex-direction: column;
     align-items: center;
 }
+.error-container {
+    background-color: #f8d7da;
+    border: 1px solid #f5c6cb;
+    border-radius: 0.25rem;
+    color: #721c24;
+    margin: 1rem;
+    padding: 1rem;
+}
+
 
 .header {
     background-color: #282c34;
@@ -64,10 +73,16 @@ input {
 }
 
 span {
-    color: brown;
+    color: #282C34FF;
     font-weight: bold;
     font-size: 16px;
     margin: 5px;
+}
+.span_dark {
+color: darkblue
+}
+p {
+
 }
 
 @keyframes App-logo-spin {

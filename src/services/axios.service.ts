@@ -1,5 +1,5 @@
 import axios from "axios";
-import {carBaseURL, PlaceBaseURL} from "../configs/urls";
+import {carBaseURL, PlaceBaseURL} from "../configs";
 
 
 const placeAxiosService = axios.create({baseURL: PlaceBaseURL})

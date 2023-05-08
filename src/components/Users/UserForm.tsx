@@ -1,20 +1,17 @@
 import React, {FC} from 'react';
 import {SubmitHandler, useForm} from "react-hook-form";
 
-import {IUser} from "../../interfaces/user.interface";
-import {IUseState} from "../../types/useState.type";
-import {userService} from "../../services/user.service";
+import {IUser} from "../../interfaces";
+import {useAppDispatch} from "../../hooks";
+import {userActions} from "../../redux";
 
-interface IProps {
-    setUsers: IUseState<IUser[]>
-}
 
-const UserForm: FC<IProps> = ({setUsers}) => {
+const UserForm: FC = () => {
     const {register, handleSubmit, reset} = useForm<IUser>()
+    const  dispatch = useAppDispatch()
 
     const save: SubmitHandler<IUser> = async (user) => {
-        const {data} = await userService.create(user)
-        setUsers(prev => [...prev, data])
+        dispatch(userActions.create({user}))
         reset()
     }
 

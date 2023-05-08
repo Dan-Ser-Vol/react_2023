@@ -2,18 +2,21 @@ import React, {FC, useEffect} from 'react';
 import {SubmitHandler, useForm} from "react-hook-form";
 import {joiResolver} from "@hookform/resolvers/joi";
 
-import {IUseState} from "../../types/useState.type";
-import {ICar} from "../../interfaces/car.interface";
+import {ICar} from "../../interfaces";
 import {carValidator} from "../../validators/car.validator";
-import {carService} from "../../services/car.service";
+import {useAppDispatch, useAppSelector} from "../../hooks";
+import {carActions} from "../../redux";
 
-interface IProps {
-    carForUpdate: ICar | null
-    setOnChange: IUseState<boolean>
-    setCarForUpdate: IUseState<ICar | null>
-}
 
-const CarForm: FC<IProps> = ({setOnChange, carForUpdate, setCarForUpdate}) => {
+const CarForm: FC = () => {
+    const {carForUpdate} = useAppSelector(state => state.carReducer)
+    const dispatch = useAppDispatch()
+
+    const {register, handleSubmit, reset, formState: {errors, isValid}, setValue} = useForm<ICar>({
+        mode: "all",
+        resolver: joiResolver(carValidator)
+    })
+
 
     useEffect(() => {
         if (carForUpdate) {
@@ -23,25 +26,17 @@ const CarForm: FC<IProps> = ({setOnChange, carForUpdate, setCarForUpdate}) => {
                 }
             })
         }
-    }, [carForUpdate])
+    }, [carForUpdate, setValue])
 
-
-    const {register, handleSubmit, reset, formState: {errors, isValid}, setValue} = useForm<ICar>({
-        mode: "all",
-        resolver: joiResolver(carValidator)
-    })
 
     const save: SubmitHandler<ICar> = async (car) => {
-        await carService.create(car)
-        setOnChange(prevState => !prevState)
+        await dispatch(carActions.create({car}))
         reset()
     }
 
     const update: SubmitHandler<ICar> = async (car) => {
-        await carService.updateById(carForUpdate!.id, car)
-        setOnChange(prevState => !prevState)
+        dispatch(carActions.updateCar({id: carForUpdate.id, car}))
         reset()
-        setCarForUpdate(null)
     }
 
     return (
@@ -61,4 +56,4 @@ const CarForm: FC<IProps> = ({setOnChange, carForUpdate, setCarForUpdate}) => {
     );
 };
 
-export default CarForm;
+export {CarForm};

@@ -1,22 +1,25 @@
-import React, {useState} from 'react';
+import React from 'react';
+import {Route, Routes} from "react-router-dom";
 
+import {Header} from "./components";
+import {CarPage, CommentPage, HomePage, UserPage} from "./pages";
+import {MainLayout} from "./Layouts";
 import './App.css';
-import {PageEnum} from "./constants/page.enum";
-import UserPage from "./pages/UserPage";
-import CommentPage from "./pages/CommentPage";
-import CarPage from "./pages/CarPage";
-import Header from "./components/Header";
+
 
 function App() {
-  const [choice, setChoice] =  useState<PageEnum>(PageEnum.USERS)
-  return (
-        <div >
-            <div><Header setChoice={setChoice}/></div>
-          {choice === PageEnum.USERS && <UserPage/>}
-          {choice === PageEnum.COMMENTS && <CommentPage/>}
-          {choice === PageEnum.CARS && <CarPage/>}
+    return (
+        <div>
+            <div><Header/></div>
+            <Routes>
+                <Route path={'/'} element={<MainLayout/>}>
+                    <Route index path={'/'} element={<HomePage/>}/>
+                    <Route path={'users'} element={<UserPage/>}/>
+                    <Route path={'comments'} element={<CommentPage/>}/>
+                    <Route path={'cars'} element={<CarPage/>}/>
+                </Route>
+            </Routes>
         </div>
     )
 }
-
 export default App;
