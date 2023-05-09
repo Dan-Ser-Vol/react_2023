@@ -6,7 +6,7 @@ import {AxiosError} from "axios";
 
 interface IState {
     cars: ICar[]
-    errors: IError
+    errors: IError | null
     trigger: boolean
     carForUpdate: ICar | null
 }
