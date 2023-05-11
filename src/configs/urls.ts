@@ -1,10 +1,11 @@
-const carBaseURL = 'http://owu.linkpc.net/carsAPI/v1'
+const carBaseURL = 'http://owu.linkpc.net/carsAPI/v2'
 const PlaceBaseURL = ' https://jsonplaceholder.typicode.com'
 
 
 const users = '/users'
 const comments = '/comments'
 const cars = '/cars'
+const auth = '/auth'
 
 const urls = {
     carsAPI: {
@@ -15,6 +16,12 @@ const urls = {
         users,
         comments,
     },
+    authAPI: {
+        register: users,
+        login: auth,
+        refresh: `${auth}/refresh`,
+        me: `${auth}/me`,
+    }
 }
 
 export {

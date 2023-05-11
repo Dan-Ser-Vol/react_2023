@@ -1,4 +1,4 @@
-import {ICar, IError} from "../../interfaces";
+import {ICar, IError, IPagination} from "../../interfaces";
 import {createAsyncThunk, createSlice, isFulfilled, isRejectedWithValue, PayloadAction} from "@reduxjs/toolkit";
 import {carService} from "../../services";
 import {AxiosError} from "axios";
@@ -6,6 +6,8 @@ import {AxiosError} from "axios";
 
 interface IState {
     cars: ICar[]
+    prev: string
+    next: string
     errors: IError | null
     trigger: boolean
     carForUpdate: ICar | null
@@ -13,12 +15,14 @@ interface IState {
 
 const initialState: IState = {
     cars: [],
+    prev: null,
+    next: null,
     errors: null,
     trigger: true,
     carForUpdate: null
 }
 
-const getAll = createAsyncThunk<ICar[], void>(
+const getAll = createAsyncThunk<IPagination<ICar>, void>(
     'carSlice/getAll',
     async (_, {rejectWithValue}) => {
         try {
@@ -31,34 +35,34 @@ const getAll = createAsyncThunk<ICar[], void>(
         }
     })
 
-const create = createAsyncThunk< void, { car: ICar }>("carSlice/create",
-    async ({car}, {rejectWithValue} )=> {
-    try {
-        await carService.create(car)
-    }catch (e) {
-const err = e as AxiosError
-        return rejectWithValue(err.response.data)
-    }
-})
+const create = createAsyncThunk<void, { car: ICar }>("carSlice/create",
+    async ({car}, {rejectWithValue}) => {
+        try {
+            await carService.create(car)
+        } catch (e) {
+            const err = e as AxiosError
+            return rejectWithValue(err.response.data)
+        }
+    })
 
 
-const updateCar = createAsyncThunk<void, { id:number, car:ICar}>("carSlice/updateCar",
+const updateCar = createAsyncThunk<void, { id: number, car: ICar }>("carSlice/updateCar",
     async ({id, car}, {rejectWithValue}) => {
         try {
             await carService.updateById(id, car)
-        }catch (e) {
+        } catch (e) {
             const err = e as AxiosError
             return rejectWithValue(err.response.data)
         }
     }
-    )
+)
 
 
-const deleteCar = createAsyncThunk< void, { id: number}>("carSlice/deleteCar",
-    async ({id} , {rejectWithValue} )=> {
+const deleteCar = createAsyncThunk<void, { id: number }>("carSlice/deleteCar",
+    async ({id}, {rejectWithValue}) => {
         try {
             await carService.deleteById(id)
-        }catch (e) {
+        } catch (e) {
             const err = e as AxiosError
             return rejectWithValue(err.response.data)
         }
@@ -74,8 +78,11 @@ const slice = createSlice({
     },
     extraReducers: builder =>
         builder
-            .addCase(getAll.fulfilled, (state, action:PayloadAction<ICar[]>) => {
-                state.cars = action.payload
+            .addCase(getAll.fulfilled, (state, action: PayloadAction<IPagination<ICar>>) => {
+                const {items, prev, next} = action.payload
+                state.cars = items
+                state.prev = prev
+                state.next = next
             })
             .addCase(updateCar.fulfilled, state => {
                 state.carForUpdate = null
