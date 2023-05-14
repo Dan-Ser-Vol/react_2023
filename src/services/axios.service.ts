@@ -15,24 +15,6 @@ axiosService.interceptors.request.use(res => {
     return res
 })
 
-axiosService.interceptors.response.use(res => {
-        return res
-    },
-    async (error) => {
-        const originalRequest = error.config
-        if (error.response.status === 401 && error.config && !error.config._isRefreshing) {
-            error.config._isRefreshing= true
-            try {
-                await authService.refresh()
-                return axiosService(originalRequest)
-            } catch (e) {
-                authService.deleteTokens()
-                return Promise.reject(error)
-            }
-        }
-        return Promise.reject(error)
-    }
-)
 
 export {
     placeAxiosService,

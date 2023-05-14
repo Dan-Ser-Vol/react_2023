@@ -34,13 +34,15 @@ const RegisterForm: FC<IProps> = () => {
         reset()
     }
     return (
-        <form onSubmit={handleSubmit(registerUser)}>
-            <input type="text" placeholder={'username'} {...register('username')}/>
-            <input type="text" placeholder={'password'} {...register('password')}/>
-            <button disabled={!isValid}>Register</button>
-            {Object.keys(errors).length>0 && <div>{Object.values(errors)[0].message}</div>}
-            {error && <div>{error.username[0]}</div>}
-        </form>
+   <div className={'form_style'}>
+       <form onSubmit={handleSubmit(registerUser)}>
+           <input type="text" placeholder={'username'} {...register('username')}/>
+           <input type="text" placeholder={'password'} {...register('password')}/>
+           <button disabled={!isValid}>Register</button>
+           {Object.keys(errors).length>0 && <div>{Object.values(errors)[0].message}</div>}
+           {error && <div>{error.username[0]}</div>}
+       </form>
+   </div>
     );
 };
 

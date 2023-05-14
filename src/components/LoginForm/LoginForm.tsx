@@ -22,11 +22,13 @@ const LoginForm: FC = () => {
     }
 
     return (
-        <form onSubmit={handleSubmit(login)}>
-            <input type="text" placeholder={'username'} {...register('username')}/>
-            <input type="text" placeholder={'password'} {...register('password')}/>
-            <button disabled={!isValid}>Login</button>
-        </form>
+      <div  className={'form_style'}>
+          <form  onSubmit={handleSubmit(login)}>
+              <input type="text" placeholder={'username'} {...register('username')}/>
+              <input type="text" placeholder={'password'} {...register('password')}/>
+              <button disabled={!isValid}>Login</button>
+          </form>
+      </div>
     );
 };
 
